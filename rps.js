@@ -40,6 +40,26 @@ function domUpdate(result) {
     
 }
 
+function createButton(){
+    const container = document.querySelector('.container');
+        const div = document.createElement('BUTTON');
+        div.innerHTML = "reset"
+        div.classList.add('reset')
+        container.appendChild(div);
+}
+function reset() {
+    const btn= document.querySelectorAll('.btn');
+        btn.forEach(function(button) {
+            button.disabled = false;
+        })
+    playerScore = 0;
+    computerScore = 0;
+    drawScore = 0;
+    const resetBtn = document.querySelector('.reset')
+    resetBtn.remove();
+
+}
+
 function playRound(){
     let result;
     let computerChoice = computerPlay();
@@ -67,8 +87,30 @@ function playRound(){
     domUpdate(result);
     scoreUpdate(result);
     console.log(playerScore, computerScore, drawScore)
-
+    
+    if (playerScore === 5 || computerScore === 5) {
+        const btn= document.querySelectorAll('.btn');
+        btn.forEach(function(button) {
+            button.disabled = true;
+        })
+        const container = document.querySelector('.container');
+        const div = document.createElement('BUTTON');
+        div.innerHTML = "reset"
+        div.classList.add('reset')
+        container.appendChild(div);
+        const resetBtn = document.querySelector('.reset');
+        resetBtn.addEventListener("click", reset)
+        if(playerScore === 5) {
+            domUpdate(`You Win the match. Your score ${playerScore}. Computer score ${computerScore}`)
+        } else{
+            domUpdate(`You Lose the match. Your score ${playerScore}. Computer score ${computerScore}`)
+        }
+    }
 }
+        
+    
+
+
 
 
 const btn = document.querySelectorAll('.btn');
