@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    height: 5%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    align-content: center;
+    padding-bottom: 0px;
+    padding-top: 25px;
+    margin-top: 25%;
+}
+.topContainer {
+    display: flex;
+    justify-content: center;
+}
+.result {
+    
+}
