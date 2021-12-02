@@ -40,7 +40,6 @@ function playRound(computerPlay, playerSelection){
         return "draw"
     }
         
-    
 }
 
 function game() {
