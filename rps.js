@@ -28,6 +28,8 @@ function scoreUpdate(result) {
     } else {
         computerScore += 1;
     }
+    document.getElementById("playerScore").innerHTML =  playerScore
+    document.getElementById("computerScore").innerHTML =  computerScore
 }
 
 function domUpdate(result) {
@@ -37,17 +39,19 @@ function domUpdate(result) {
     div.classList.add('result')
     div.textContent = result;
     container.appendChild(div);
-    
 }
 
-function createButton(){
+function createResetButton(){
     const container = document.querySelector('.container');
-        const div = document.createElement('BUTTON');
-        div.innerHTML = "reset"
-        div.classList.add('reset')
-        container.appendChild(div);
+    const div = document.createElement('BUTTON');
+    div.innerHTML = "reset"
+    div.classList.add('reset')
+    container.appendChild(div);
+    const resetBtn = document.querySelector('.reset');
+    resetBtn.addEventListener("click", restartGame)
 }
-function reset() {
+
+function restartGame() {
     const btn= document.querySelectorAll('.btn');
         btn.forEach(function(button) {
             button.disabled = false;
@@ -57,101 +61,63 @@ function reset() {
     drawScore = 0;
     const resetBtn = document.querySelector('.reset')
     resetBtn.remove();
+}
 
+function disableBtn() {
+    const btn= document.querySelectorAll('.btn');
+    btn.forEach(function(button) {
+        button.disabled = true;
+     })
+}
+function checkRoundResult(playerChoice, computerChoice) {
+    if (playerChoice === "Rock" && computerChoice === "Scissor"){
+        return "You Win! Rock beats Scissor";
+    }else if (computerChoice === "Rock" && playerChoice === "Scissor"){
+        return "You Lose! Rock beats Scissor";
+    }else if (playerChoice === "Scissor" && computerChoice === "Paper"){
+        return "You Win! Scissor beats Paper";
+    }else if (computerChoice === "Scissor" && playerChoice === "Paper"){
+        return "You Lose! Scissor beats Paper";  
+    }else if (playerChoice === "Paper" && computerChoice === "Rock"){
+        return"You Win! Paper beats Rock";
+    }else if (computerChoice === "Paper" && playerChoice === "Rock"){
+        return "You Lose! Rock beats Paper";
+    }else if (playerChoice === computerChoice) {
+        return "draw";
+    }
+}
+
+function winner(playerScore, computerScore) {
+    if(playerScore === 5) {
+        domUpdate(`You wonn the match. Your score ${playerScore}. Computer score ${computerScore}`)
+    } else{
+        domUpdate(`You lost the match. Your score ${playerScore}. Computer score ${computerScore}`)
+    }
 }
 
 function playRound(){
     let result;
     let computerChoice = computerPlay();
     const choice = this.textContent
-    console.log(choice);
-    console.log(computerChoice)
     let playerChoice = choice;
-    if (playerChoice === "Rock" && computerChoice === "Scissor"){
-        result = "You Win! Rock beats Scissor";
-    }else if (computerChoice === "Rock" && playerChoice === "Scissor"){
-        result = "You Lose! Rock beats Scissor";
-    }else if (playerChoice === "Scissor" && computerChoice === "Paper"){
-        result = "You Win! Scissor beats Paper";
-    }else if (computerChoice === "Scissor" && playerChoice === "Paper"){
-        result =  "You Lose! Scissor beats Paper";
-        
-    }else if (playerChoice === "Paper" && computerChoice === "Rock"){
-        result = "You Win! Paper beats Rock";
-    }else if (computerChoice === "Paper" && playerChoice === "Rock"){
-        result = "You Lose! Rock beats Paper";
-    }else if (playerChoice === computerChoice) {
-        result = "draw";
-       
-    }
+    result = checkRoundResult(playerChoice, computerChoice);
     domUpdate(result);
     scoreUpdate(result);
-    document.getElementById("playerScore").innerHTML =  playerScore
-    document.getElementById("computerScore").innerHTML =  computerScore
-    console.log(playerScore, computerScore, drawScore)
-    
     if (playerScore === 5 || computerScore === 5) {
-        const btn= document.querySelectorAll('.btn');
-        btn.forEach(function(button) {
-            button.disabled = true;
-        })
-        const container = document.querySelector('.container');
-        const div = document.createElement('BUTTON');
-        div.innerHTML = "reset"
-        div.classList.add('reset')
-        container.appendChild(div);
-        const resetBtn = document.querySelector('.reset');
-        resetBtn.addEventListener("click", reset)
-        if(playerScore === 5) {
-            domUpdate(`You Win the match. Your score ${playerScore}. Computer score ${computerScore}`)
-        } else{
-            domUpdate(`You Lose the match. Your score ${playerScore}. Computer score ${computerScore}`)
-        }
+        disableBtn();
+        createResetButton();
+        winner(playerScore, computerScore);
     }
 }
-        
-    
-
-
-
 
 const btn = document.querySelectorAll('.btn');
-let playerScore = 0;
-let computerScore = 0;
-let drawScore = 0;
-btn.forEach(function(button) {
-    button.addEventListener("click",playRound);
-    
-})
-console.log(playerScore)
-//rock.addEventListener("click",playRound);
-if (playerScore === 21) {
-    console.log(playerScore)
-}
-/* function game() {
-    let rounds = 5;
     let playerScore = 0;
     let computerScore = 0;
-    let draw = 0;
-    for (let i = 0; i < 5; i++) {
-        let result = playRound(computerPlay(),playerSelection())
-        console.log(result)
-        if (result ==="draw") {
-            draw += 1;
-        }else if (result.split(" ").includes("Win!")) {
-            playerScore += 1;
-        } else {
-            computerScore += 1;
-        }
-    }
-    console.log(playerScore, computerScore)
-    if (playerScore > computerScore) {
-        return "Player win"
-    }else {
-        return "Computer Win"
-    }
-}
-*/
-//console.log(game())
+    let drawScore = 0;
+    btn.forEach(function(button) {
+        button.addEventListener("click",playRound);
+    })
+
+
 
 
