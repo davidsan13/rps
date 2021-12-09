@@ -86,6 +86,8 @@ function playRound(){
     }
     domUpdate(result);
     scoreUpdate(result);
+    document.getElementById("playerScore").innerHTML =  playerScore
+    document.getElementById("computerScore").innerHTML =  computerScore
     console.log(playerScore, computerScore, drawScore)
     
     if (playerScore === 5 || computerScore === 5) {
